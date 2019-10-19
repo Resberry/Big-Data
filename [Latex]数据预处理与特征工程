@@ -1,0 +1,258 @@
+```tex
+\documentclass[a4paper, 11pt]{article}
+
+%%%%%% 导入包 %%%%%%
+\usepackage{CJK}
+\usepackage{graphicx}
+\usepackage[unicode]{hyperref}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{cite}
+\usepackage{indentfirst}
+\usepackage{enumitem}
+%%%%%% 设置字号 %%%%%%
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochuhao}{\fontsize{36pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoerhao}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}
+
+%%%% 设置 section 属性 %%%%
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+{-1.5ex \@plus -.5ex \@minus -.2ex}%
+{.5ex \@plus .1ex}%
+{\normalfont\sihao\CJKfamily{hei}}}
+\makeatother
+
+%%%% 设置 subsection 属性 %%%%
+\makeatletter
+\renewcommand\subsection{\@startsection{subsection}{1}{\z@}%
+{-1.25ex \@plus -.5ex \@minus -.2ex}%
+{.4ex \@plus .1ex}%
+{\normalfont\xiaosihao\CJKfamily{hei}}}
+\makeatother
+
+%%%% 设置 subsubsection 属性 %%%%
+\makeatletter
+\renewcommand\subsubsection{\@startsection{subsubsection}{1}{\z@}%
+{-1ex \@plus -.5ex \@minus -.2ex}%
+{.3ex \@plus .1ex}%
+{\normalfont\xiaosihao\CJKfamily{hei}}}
+\makeatother
+
+%%%% 段落首行缩进两个字 %%%%
+\makeatletter
+\let\@afterindentfalse\@afterindenttrue
+\@afterindenttrue
+\makeatother
+\setlength{\parindent}{2em}  %中文缩进两个汉字位
+
+
+%%%% 下面的命令重定义页面边距，使其符合中文刊物习惯 %%%%
+\addtolength{\topmargin}{-54pt}
+\setlength{\oddsidemargin}{0.63cm}  % 3.17cm - 1 inch
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{14.66cm}
+\setlength{\textheight}{24.00cm}    % 24.62
+
+%%%% 下面的命令设置行间距与段落间距 %%%%
+\linespread{1.4}
+% \setlength{\parskip}{1ex}
+\setlength{\parskip}{0.5\baselineskip}
+\hypersetup{CJKbookmarks=true}
+%%%% 正文开始 %%%%
+\begin{document}
+\begin{CJK*}{GBK}{song}
+
+%%%% 定理类环境的定义 %%%%
+\newtheorem{example}{例}             % 整体编号
+\newtheorem{algorithm}{算法}
+\newtheorem{theorem}{定理}[section]  % 按 section 编号
+\newtheorem{definition}{定义}
+\newtheorem{axiom}{公理}
+\newtheorem{property}{性质}
+\newtheorem{proposition}{命题}
+\newtheorem{lemma}{引理}
+\newtheorem{corollary}{推论}
+\newtheorem{remark}{注解}
+\newtheorem{condition}{条件}
+\newtheorem{conclusion}{结论}
+\newtheorem{assumption}{假设}
+
+%%%% 重定义 %%%%
+\renewcommand{\contentsname}{目录}  % 将Contents改为目录
+\renewcommand{\abstractname}{摘要}  % 将Abstract改为摘要
+\renewcommand{\refname}{参考文献}   % 将References改为参考文献
+\renewcommand{\indexname}{索引}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\appendixname}{附录}
+\renewcommand{\algorithm}{算法}
+
+
+%%%% 定义标题格式，包括title，author，affiliation，email等 %%%%
+\title{特征工程与数据预处理}
+\date{\today}
+\author{张翼鹏}
+
+
+\maketitle
+\tableofcontents
+
+\newpage
+
+
+\section{特征工程是什么}
+“数据和特征决定了机器学习的上限，而模型和算法只是逼近这个上限而已。”
+\\ \indent
+特征工程指的是把原始数据转变为模型的训练数据的过程，目的是最大限度地从原始数据中提取特征以供算法和模型使用。
+\section{数据预处理}
+未经处理的特征可能有以下问题：
+\begin{enumerate}
+\renewcommand{\labelenumi}{$\bullet$}
+\item {\bf 不属于同一量纲}：即特征的规格不一样，不能够放在一起比较。无量纲化可以解决这一问题。
+\item {\bf 信息冗余}：对于某些定量特征，其包含的有效信息为区间划分，例如学习成绩，假若只关心“及格”或“不及格”，那么需要将定量的分数，转换成“1”和“0”表示及格和不及格。二值化可以解决这一问题。
+\item {\bf 定性特征不能直接使用}：某些机器学习算法和模型只能接受定量特征的输入，那么需要将定性特征转换为定量特征。最简单的方式是为每一种定性值指定一个定量值，但是这种方式过于灵活，增加了调参的工作。通常使用哑编码的方式将定性特征转换为定量特征。
+\item {\bf 存在缺失值}：缺失值需要补充。
+\end{enumerate}
+\subsection{无量纲化}
+\subsubsection{标准化}
+$$x' = {{x - \mu } \over \sigma }$$
+
+令每一{\bf 列}数据符合标准正态分布。
+\subsubsection{归一化}
+$$x' = {{x - \min } \over {\max  - \min }}$$
+
+将每一{\bf 列}数据缩放到$[0,1]$区间内。
+\subsubsection{正则化}
+$$x' = {x \over {{{\left\| x \right\|}_p}}}$$
+
+将每一{\bf 行}数据缩放到单位范数。（该步骤只在少数问题中使用，比如后面需要使用点积或其它核方法计算两个样本之间的相似性时。主要应用于文本分类和聚类中。）
+\subsection{定量特征二值化（离散化）}
+设定一个阈值，大于阈值的赋值为1，小于等于阈值的赋值为0：
+$$ x'=\left\{
+\begin{aligned}
+&1 \quad x>{\rm{threshold}}\\
+&0 \quad x \le {\rm{threshold}}\\
+\end{aligned}
+\right.
+$$
+
+进一步，我们用此法同样可以将数据离散化，比如讨论年龄段问题时将$[0,100]$区间离散化，均匀分成10个互不相交的小区间，分别赋值$0-9$。
+\subsection{定性特征哑编码}
+假设有$N$种定性值，则将这一个特征扩展为$N$种特征，即升维。当原始特征值为第$i$种定性值时，第$i$个扩展特征赋值为1，其他扩展特征赋值为0。
+
+哑编码的方式相比直接指定的方式，不同的特征值之间没有序关系且互不影响，不用增加调参的工作。对于线性模型来说，使用哑编码后的特征可以达到非线性的效果。
+\section{特征选择}
+特征选择的原因：
+\begin{enumerate}
+\renewcommand{\labelenumi}{$\bullet$}
+\item 降低复杂度、降维，减少数据冗余，使模型泛化能力更强，避免过拟合
+\item 增强对特征和特征值之间的理解。
+\end{enumerate}
+
+特征选择的依据：
+\begin{enumerate}
+\renewcommand{\labelenumi}{$\bullet$}
+\item {\bf 特征是否发散}：如果一个特征不发散，例如方差接近于0，也即样本在这个特征上基本上没有差异，这个特征对于样本的区分并无作用。
+\item {\bf 特征与目标的相关性}：与目标相关性高的特征，应当优选选择。
+\item {\bf 特征与特征的相关性}：若两个不同的特征相关性很强，说明二者携带的信息有很大的重复，易造成信息冗余，此时需要舍弃一个特征，或利用二者构造一个新的特征。
+\end{enumerate}
+
+根据特征选择的形式可以将特征选择方法分为3种：
+\begin{enumerate}
+\renewcommand{\labelenumi}{$\bullet$}
+\item {\bf Filter（过滤法）}：按照发散性或者相关性对各个特征进行评分，根据评分选择特征。
+\item {\bf Wrapper（包装法）}：根据目标函数（通常是预测效果评分），每次选择若干特征，或者排除若干特征。
+\item {\bf Embedded（嵌入法）}：先使用某些机器学习的算法和模型进行训练，得到各个特征的权值系数，根据系数从大到小选择特征。类似于Filter方法，但是是通过训练来确定特征的优劣。
+\end{enumerate}
+\subsection{过滤法}
+\subsubsection{移除低方差的特征}
+设定阈值，将方差小于该阈值的特征剔除。
+\subsubsection{单变量特征选择}
+单独地计算每个特征的某个统计指标，根据该指标来判断哪些特征重要，剔除那些不重要的特征。
+\begin{enumerate}
+\renewcommand{\labelenumi}{$\bullet$}
+\item 分类问题（$y$离散）可采用：卡方检验，互信息。
+\item 回归问题（$y$连续）可采用：皮尔森相关系数，最大信息系数。
+\end{enumerate}
+1、卡方检验
+$${\chi ^2} = \sum {{{{{(A - E)}^2}} \over E}} $$
+
+\hangafter 1
+\hangindent 5em
+作用：检验定性自变量对定性因变量的相关性。$A$为观察值，$E$为期望值。检验统计量越大，说明两变量相关关系越强。
+
+\noindent
+2、皮尔森相关系数
+$${\rho _{X,Y}} = {{{\mathop{\rm cov}} (X,Y)} \over {{\sigma _X}{\sigma _Y}}}$$
+
+作用：衡量变量之间的线性相关性，结果的取值区间为$[-1,1]$。
+
+\hangafter 1
+\hangindent 5em
+优势：计算速度快；取值区间是$[-1,1]$，使其能够表示更丰富的关系。
+
+\hangafter 1
+\hangindent 5em
+缺陷：只对线性关系敏感，如果关系是非线性的，即便两个变量具有一一对应的关系，皮尔森相关性也可能会接近0。
+
+\noindent
+3、互信息
+$$I(X;Y) = \sum\limits_{x \in X} {\sum\limits_{y \in Y} {p(x,y)\log {{p(x,y)} \over {p(x)p(y)}}} } $$
+
+作用：评价定性自变量与定性因变量的相关性。
+
+\hangafter 1
+\hangindent 5em
+缺陷：没有办法归一化，在不同数据集上的结果无法做比较；对于连续变量的计算不是很方便，通常变量需要先离散化，但互信息的结果对离散化的方式很敏感。
+
+\noindent
+4、最大互信息系数（$MIC$）
+$$MIC = \mathop {\max }\limits_{{\rm{m}}*n < B} {{\mathop {\max }\limits_{\text{不同划分}} (\sum\limits_{1 \le x \le m} {\sum\limits_{1 \le y \le n} {p(x,y)\log {{p(x,y)} \over {\sum\limits_{1 \le k \le m} {p(k,y)} \sum\limits_{1 \le k \le n} {p(x,k)} }}} } )} \over {\log \min \{ m,n\} }}$$
+
+只讨论数据的两个属性（随机变量），数据点分布在二维空间中，用$m*n$的网格划分数据空间，将落在第$(x,y)$格子中的数据点的频率作为$P(x,y)$ 的估计，然后计算离散化后的随机变量的互信息。因为$m*n$的网格划分方式不止一种，所以我们要获得使互信息最大的网格划分，然后使用归一化因子，将互信息的值转化为$(0,1)$区间之内。最后，找到能使归一化互信息最大的网格分辨率（即$m$和$n$的值，$B=n^{0.6}$），作为$MIC$的度量值。
+
+\hangafter 1
+\hangindent 5em
+优势：若具有足够的样本，可以捕获广泛的关系，而不限于特定的函数类型；对类型不同但噪声程度同等的关系给予相近的分数。
+
+缺陷：当零假设不成立时，$MIC$的统计可能会受到影响。
+\subsection{包装法}
+\subsubsection{递归特征消除}
+对模型进行多轮训练，每轮训练后，移除若干权重（即系数）低的特征，再基于新的特征集进行下一轮训练，直到特征数量达到要求。
+\subsection{嵌入法}
+有些机器学习方法本身就具有对特征进行打分的机制，或者很容易将其运用到特征选择任务中。嵌入法即用基于机器学习模型的方法来选择特征。
+\subsubsection{基于$L1$或$L2$范数的特征选择}
+对所有原始特征进行训练，给代价函数加入$L1$或$L2$惩罚项：
+$$\lambda ||w |{|_1}\quad\quad\lambda ||w |{|_2}$$
+使用$L1$范数可以快速让某些特征的权重收缩到0；使用$L2$范数可以集体减小多个特征的权重。
+\section{降维}
+特征选择完成后，就可以直接训练模型了。但是由于特征矩阵有时过大，导致计算量大，训练时间长，因此降低特征矩阵维度也是必不可少的。常见的降维方法除了以上提到的基于$L1$惩罚项的模型以外，另外还有主成分分析法（$PCA$）和线性判别分析法（$LDA$），其本质都是将原始的样本映射到维度更低的样本空间中。
+\subsection{$PCA$}
+如果要将原始$D$维数据投影到$M$维子空间当中，$PCA$的做法是计算原始数据的协方差矩阵$S$，求其前$M$大特征值对应的单位特征向量，然后将其作用到原始样本矩阵上，得到降维后的样本矩阵。
+
+$PCA$的目标是去掉原始数据冗余的维度，让映射后的样本具有最大的发散性，是一种无监督的降维方法。
+\subsection{$LDA$}
+首先计算类间散度矩阵$S_b$：
+$${S_b} = ({\mu _0} - {\mu _1}){({\mu _0} - {\mu _1})^T}$$
+其中$\mu _0$是第0类样本的均值，$\mu _1$是第1类样本的均值。
+
+然后计算类内散列矩阵$S_w$：
+$${S_w} = \sum\limits_{x \in {X_0}} {(x - {\mu _0}){{(x - {\mu _1})}^T}}  + \sum\limits_{x \in {X_1}} {(x - {\mu _0}){{(x - {\mu _1})}^T}} $$
+其中$X_0$是第0类样本的集合，$X_1$是第1类样本的集合。
+
+最后${S_w}^{ - 1}{S_b}$的最大特征值所对应的特征向量$w$即为最佳投影方向。
+
+$LDA$的目标是使相同类别的数据分布更紧凑，不同类别的数据尽量相互远离，让映射后的样本有最好的分类性能，是一种有监督的降维方法。
+\end{CJK*}
+\end{document}
+```
