@@ -292,7 +292,7 @@ $${h_\theta }(x) = {1 \over {1 + {e^{ - {\theta ^T}x}}}}$$
 \hangindent 4.5em
 \quad\quad\quad
 2、使用交叉熵代价函数：
-$$J(\theta ) =  - {1 \over n}\sum\limits_{i = 1}^n {[({y^{(i)}})} \ln ({h_\theta }({x^{(i)}})) + (1 - {y^{(i)}})\log (1 - {h_\theta }({x^{(i)}}))]$$
+$$J(\theta ) =  - {1 \over n}\sum\limits_{i = 1}^n {[({y^{(i)}})} \ln ({h_\theta }({x^{(i)}})) + (1 - {y^{(i)}})\ln (1 - {h_\theta }({x^{(i)}}))]$$
 
 \hangafter 1
 \hangindent 4.5em
