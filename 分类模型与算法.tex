@@ -312,10 +312,10 @@ $${{\theta '}_j} = {\theta _j} - {1 \over n}\sum\limits_{i = 1}^n {({h_\theta }(
 （2）利用softmax函数。目标函数为：
 $${h_w}(x) = {1 \over {\sum\nolimits_{i = 1}^k {{e^{{w_i}x + {b_i}}}} }}
 \left[\begin{matrix}
-{w_1} \cdot x + {b_1} \\
-{w_2} \cdot x + {b_2}\\
+e^{{w_1} \cdot x + {b_1}}\\
+e^{{w_2} \cdot x + {b_2}}\\
 \vdots\\
-{w_k} \cdot x + {b_k}
+e^{{w_k} \cdot x + {b_k}}
 \end{matrix}\right]
 $$
 其中$k$为类别的个数，${w_i}$和$b_i$为第$i$个类别对应的权重向量和偏置标量。
